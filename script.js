@@ -1,5 +1,5 @@
-import { japanCities } from "./japanCities.mjs";
-import { dogNames } from "./dogNames.mjs";
+import japanCities from "./japanCities.mjs";
+import dogNames from "./dogNames.mjs";
 const mainTag = document.querySelector("main");
 
 const getShiba = function() {

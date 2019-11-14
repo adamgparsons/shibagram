@@ -3,6 +3,8 @@ import dogNames from "./dogNames.mjs";
 const mainTag = document.querySelector("main");
 const showMoreButton = document.querySelector(".show-more");
 
+showMoreButton.style.display = "none";
+
 const getShiba = function() {
   let displayPic = "";
   let postPic = "";
@@ -26,6 +28,7 @@ const getShiba = function() {
     .then(() => {
       if (displayPic.length > 0) {
         generatePost(displayPic, postPic, dogName, postLocation);
+        showMoreButton.style.display = "block";
       }
     })
     .catch(err => {

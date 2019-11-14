@@ -1,6 +1,7 @@
 import japanCities from "./japanCities.mjs";
 import dogNames from "./dogNames.mjs";
 const mainTag = document.querySelector("main");
+const showMoreButton = document.querySelector(".show-more");
 
 const getShiba = function() {
   let displayPic = "";
@@ -79,6 +80,12 @@ const getShiba = function() {
   };
 };
 
-for (var i = 0; i < 7; i++) {
-  getShiba();
-}
+const loadFeed = function() {
+  for (var i = 0; i < 7; i++) {
+    getShiba();
+  }
+};
+
+loadFeed();
+
+showMoreButton.addEventListener("click", loadFeed);

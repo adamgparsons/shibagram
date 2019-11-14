@@ -9,14 +9,12 @@ const getShiba = function() {
   const dogName = dogNames[Math.floor(Math.random() * dogNames.length)];
   const postLocation =
     japanCities[Math.floor(Math.random() * japanCities.length)] + ", Japan";
-  console.log(postLocation);
   fetch("https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?")
     .then(result => {
       return result.json();
     })
     .then(jsonData => {
       displayPic = jsonData.toString();
-      console.log(displayPic);
     });
   fetch("https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?")
     .then(result => {

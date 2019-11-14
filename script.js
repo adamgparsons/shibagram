@@ -1,11 +1,6 @@
-import japanCities from "./japanCities.js";
-import dogNames from "./dogNames.js";
+import japanCities from "./japanCities.mjs";
+import dogNames from "./dogNames.mjs";
 const mainTag = document.querySelector("main");
-
-//get shibas
-// first first image the first image
-// store it in a variable called DisplayImage
-//
 
 const getShiba = function() {
   let displayPic = "";
@@ -28,6 +23,8 @@ const getShiba = function() {
     })
     .then(jsonData => {
       postPic = jsonData.toString();
+    })
+    .then(() => {
       if (displayPic.length > 0) {
         generatePost(displayPic, postPic, dogName, postLocation);
       }
@@ -82,6 +79,6 @@ const getShiba = function() {
   };
 };
 
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < 7; i++) {
   getShiba();
 }

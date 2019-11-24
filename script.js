@@ -27,7 +27,7 @@ const getShibas = function() {
       const postPics = data.slice(numberOfPosts, data.length);
 
       // create an array of objects
-      const newFeed = displayPics.map(displayPic => {
+      feed = displayPics.map(displayPic => {
         const postNumber = displayPics.indexOf(displayPic);
 
         // Generate random dog name
@@ -46,14 +46,6 @@ const getShibas = function() {
         postObj.postLocation = postLocation;
         return postObj;
       });
-
-      // If there's already content in the feed
-      // concatenate it
-      if (feed) {
-        feed = feed.concat(newFeed);
-      } else {
-        feed = newFeed;
-      }
       displayFeed();
     });
 };

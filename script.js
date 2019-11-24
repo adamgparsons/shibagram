@@ -3,90 +3,85 @@ import dogNames from "./dogNames.mjs";
 const mainTag = document.querySelector("main");
 const showMoreButton = document.querySelector(".show-more");
 
+// Number of posts on page load/ onclick load show more
+const numberOfPosts = 6;
+
+// API url
+const url = `https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?count=${numberOfPosts *
+  2}`;
+
+// feed of content
+let feed;
+
 showMoreButton.style.display = "none";
 
-const getShiba = function() {
-  let displayPic = "";
-  let postPic = "";
-  const dogName = dogNames[Math.floor(Math.random() * dogNames.length)];
-  const postLocation =
-    japanCities[Math.floor(Math.random() * japanCities.length)] + ", Japan";
-  fetch("https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?")
-    .then(result => {
-      return result.json();
-    })
-    .then(jsonData => {
-      displayPic = jsonData.toString();
-    });
-  fetch("https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?")
-    .then(result => {
-      return result.json();
-    })
-    .then(jsonData => {
-      postPic = jsonData.toString();
-    })
-    .then(() => {
-      if (displayPic.length > 0) {
-        generatePost(displayPic, postPic, dogName, postLocation);
-        showMoreButton.style.display = "block";
+const getShibas = function() {
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      // JSON data into two arrays
+      // One for display pics
+      const displayPics = data.slice(0, numberOfPosts);
+
+      // One for post pics
+      const postPics = data.slice(numberOfPosts, data.length);
+
+      // create an array of objects
+      const newFeed = displayPics.map(displayPic => {
+        const postNumber = displayPics.indexOf(displayPic);
+
+        // Generate random dog name
+        const dogName = dogNames[Math.floor(Math.random() * dogNames.length)];
+
+        // Generate random dog location
+        const postLocation =
+          japanCities[Math.floor(Math.random() * japanCities.length)] +
+          ", Japan";
+
+        // populate the object
+        const postObj = {};
+        postObj.displayPic = displayPics[postNumber];
+        postObj.postPic = postPics[postNumber];
+        postObj.dogName = dogName;
+        postObj.postLocation = postLocation;
+        return postObj;
+      });
+
+      // If there's already content in the feed
+      // concatenate it
+      if (feed) {
+        feed = feed.concat(newFeed);
+      } else {
+        feed = newFeed;
       }
-    })
-    .catch(err => {
-      // Do something for an error here
+      displayFeed();
     });
-
-  const generatePost = function(
-    displayPicUrl,
-    postPicUrl,
-    dogName,
-    postLocation
-  ) {
-    const shibaPost = document.createElement("div");
-    shibaPost.className = "shiba-post";
-    mainTag.appendChild(shibaPost);
-
-    const profileBar = document.createElement("div");
-    profileBar.className = "profile-bar";
-    shibaPost.appendChild(profileBar);
-
-    const profileImgHolder = document.createElement("div");
-    profileImgHolder.className = "profile-img-holder";
-    profileBar.appendChild(profileImgHolder);
-
-    const profileImg = document.createElement("div");
-    profileImg.className = "profile-img";
-    profileImg.style.backgroundImage = `url(${displayPicUrl})`;
-    profileImgHolder.appendChild(profileImg);
-
-    const profileDetails = document.createElement("div");
-    profileDetails.className = "profile-details";
-    profileBar.append(profileDetails);
-
-    const shibaName = document.createElement("h2");
-    shibaName.innerText = dogName;
-    profileDetails.appendChild(shibaName);
-
-    const shibaLocation = document.createElement("h3");
-    shibaLocation.innerText = postLocation;
-    profileDetails.appendChild(shibaLocation);
-
-    const imgFrame = document.createElement("div");
-    imgFrame.className = "img-frame";
-    shibaPost.appendChild(imgFrame);
-
-    const mainImg = document.createElement("img");
-    mainImg.className = "main-img";
-    mainImg.src = postPicUrl;
-    imgFrame.appendChild(mainImg);
-  };
 };
 
-const loadFeed = function() {
-  for (var i = 0; i < 7; i++) {
-    getShiba();
-  }
+const displayFeed = function() {
+  feed.forEach(feedItem => {
+    const post = `
+    <div class="shiba-post">
+      <div class="profile-bar">
+        <div class="profile-img-holder">
+          <div class="profile-img" style="background-image: url(${feedItem.displayPic});"></div>
+        </div>
+        <div class="profile-details">
+          <h2>${feedItem.dogName}</h2>
+          <h3>${feedItem.postLocation}</h3>
+        </div>
+      </div>
+      <div class="img-frame">
+        <img class="main-img" src="${feedItem.postPic}">
+      </div>
+    </div>
+    `;
+    mainTag.innerHTML = mainTag.innerHTML + post;
+  });
+  // display show more button
+  showMoreButton.style.display = "block";
 };
 
-loadFeed();
+getShibas();
 
-showMoreButton.addEventListener("click", loadFeed);
+showMoreButton.addEventListener("click", getShibas);

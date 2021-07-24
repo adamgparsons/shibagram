@@ -6,8 +6,8 @@
   "scripts": {
     "client": "cd client && npm run start",
     "server": "cd server && nodemon app.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run api\" \"npm run frontend\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",

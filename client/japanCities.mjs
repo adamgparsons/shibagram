@@ -814,6 +814,6 @@ const japanCities = [
   "Uenohara",
   "Yamanashi",
   "Kōshū",
-  "Chūō"
+  "Chūō",
 ];
 export default japanCities;

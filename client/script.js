@@ -7,27 +7,29 @@ const showMoreButton = document.querySelector(".show-more");
 const numberOfPosts = 6;
 
 // API url
-const url = `https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?count=${numberOfPosts *
-  2}`;
+
+const url =
+  window.location.hostname === "localhost"
+    ? `http://localhost:3000/count=${numberOfPosts * 2}`
+    : "https://badadvice.rest/api/";
 
 // feed of content
 let feed;
 
 showMoreButton.style.display = "none";
 
-const getShibas = function() {
+const getShibas = function () {
   fetch(url)
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       // JSON data into two arrays
       // One for display pics
       const displayPics = data.slice(0, numberOfPosts);
-
       // One for post pics
       const postPics = data.slice(numberOfPosts, data.length);
 
       // create an array of objects
-      feed = displayPics.map(displayPic => {
+      feed = displayPics.map((displayPic) => {
         const postNumber = displayPics.indexOf(displayPic);
 
         // Generate random dog name
@@ -50,8 +52,8 @@ const getShibas = function() {
     });
 };
 
-const displayFeed = function() {
-  feed.forEach(feedItem => {
+const displayFeed = function () {
+  feed.forEach((feedItem) => {
     const post = `
     <div class="shiba-post">
       <div class="profile-bar">

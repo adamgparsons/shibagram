@@ -252,7 +252,7 @@ const dogNames = [
   "Toshiko",
   "Umeko",
   "Wakana",
-  "Yasu"
+  "Yasu",
 ];
 
 export default dogNames;

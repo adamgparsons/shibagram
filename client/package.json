@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "Adam Parsons",
   "license": "ISC",
-  "devDependencies": {
+  "Dependencies": {
     "parcel-bundler": "^1.12.5"
   },
   "proxy": "http://localhost:3000"

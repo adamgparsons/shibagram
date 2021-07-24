@@ -11,7 +11,7 @@ const numberOfPosts = 6;
 const url =
   window.location.hostname === "localhost"
     ? `http://localhost:3000/count=${numberOfPosts * 2}`
-    : "https://badadvice.rest/api/";
+    : `https://shibagram.herokuapp.com/count=${numberOfPosts * 2}`;
 
 // feed of content
 let feed;

@@ -1,5 +1,3 @@
-import japanCities from "./japanCities.mjs";
-import dogNames from "./dogNames.mjs";
 const mainTag = document.querySelector("main");
 const showMoreButton = document.querySelector(".show-more");
 

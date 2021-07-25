@@ -7,8 +7,8 @@ const numberOfPosts = 6;
 // API url
 const url =
   window.location.hostname === "localhost"
-    ? `http://localhost:3000/count=${numberOfPosts * 2}`
-    : `https://shibagram.herokuapp.com/count=${numberOfPosts * 2}`;
+    ? `http://localhost:3000/api/count=${numberOfPosts * 2}`
+    : `https://shibagram.herokuapp.com/api/count=${numberOfPosts * 2}`;
 
 showMoreButton.style.display = "none";
 

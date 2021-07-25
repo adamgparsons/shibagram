@@ -14,7 +14,7 @@ app.use(express.json());
 // Serve static files from the frontend
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-app.use("/", routes);
+app.use("/api", routes);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/../client/dist/index.html"));

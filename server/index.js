@@ -1,6 +1,7 @@
 const express = require("express");
 const routes = require("./routes");
 const path = require("path");
+const middleware = require("./middleware");
 
 const app = express();
 
@@ -16,9 +17,13 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.use("/api", routes);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/../client/dist/index.html"));
-});
+app.use(
+  "/",
+  express.static(path.join(__dirname, "/../client/dist/index.html"))
+);
+
+app.use(middleware.notFound);
+app.use(middleware.errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`listening on ${PORT}`));

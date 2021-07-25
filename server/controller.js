@@ -34,5 +34,5 @@ exports.shiba_get = (req, res, next) => {
       });
       res.send(shibaData);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => next(err));
 };

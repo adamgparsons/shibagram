@@ -1,18 +1,38 @@
-const https = require("https");
-const request = require("request");
-
-// Need to determine what output from the backend
+const fetch = require("node-fetch");
+const postData = require("./postData");
 
 exports.shiba_get = (req, res, next) => {
-  const numberRequested = Number(req.params.count);
-  const url = `http://shibe.online/api/shibes?count=${numberRequested * 2}`;
+  const shibasRequested = Number(req.params.count);
+  const url = `http://shibe.online/api/shibes?count=${shibasRequested * 2}`;
 
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.send(response.body);
-    }
-    if (error || response.statusCode !== 200) {
-      return res.status(500).json({ type: "error", message: err.message });
-    }
-  });
+  const dogNames = postData.dogNames;
+  const japanCities = postData.japanCities;
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((shibaImageUrls) => {
+      // JSON data into two arrays
+      // One for display pics
+      const displayPics = shibaImageUrls.slice(0, shibasRequested);
+      // One for post pics
+      const postPics = shibaImageUrls.slice(
+        shibasRequested,
+        shibaImageUrls.length
+      );
+
+      const shibaData = displayPics.map((displayPic) => {
+        const postNumber = displayPics.indexOf(displayPic);
+
+        return {
+          displayPic: displayPics[postNumber],
+          postPic: postPics[postNumber],
+          dogName: dogNames[Math.floor(Math.random() * dogNames.length)],
+          postLocation:
+            japanCities[Math.floor(Math.random() * japanCities.length)] +
+            ", Japan",
+        };
+      });
+      res.send(shibaData);
+    })
+    .catch((err) => console.log(err));
 };

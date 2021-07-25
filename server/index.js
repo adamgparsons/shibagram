@@ -9,6 +9,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
+
 // Serve static files from the frontend
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
